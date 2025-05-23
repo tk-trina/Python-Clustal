@@ -3,7 +3,6 @@ import numpy as np
 from upgma import UPGMA_Node
 from pairwise_alignment import base_needleman_wunsch_affine
 
-
 class Cluster:
     def __init__(self, seqs: list[str]):
         self.seqs = seqs
@@ -71,10 +70,6 @@ def progressive_alignment(
         if not node.children:
             return Cluster(seqs=[sequences[node.id]])
 
-        if weight_matrix is None:
-            return profile_alignment(
-                Cluster1=inner(node=node.children[0]),
-                Cluster2=inner(node=node.children[1]), gap_open=gap_open, gap_extend=gap_extend)
 
         return cluster_alignment(
             first=inner(node=node.children[0]),

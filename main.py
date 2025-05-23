@@ -44,9 +44,16 @@ def main_():
     args = parse_args()
     molecule = args.molecule
     if molecule == 'DNA':
-        weight_matrix = None
+        weight_matrix = {('A', 'A'): 1, ('A', 'T'): -1, ('A', 'G'): -1, ('A', 'C'): -1, 
+                         ('T', 'A'): -1, ('T', 'T'): 1, ('T', 'G'): -1, ('T', 'C'): -1, 
+                         ('G', 'A'): -1, ('G', 'T'): -1, ('G', 'G'): 1, ('G', 'C'): -1, 
+                         ('C', 'A'): -1, ('C', 'T'): -1, ('C', 'G'): -1, ('C', 'C'): 1, 
+                         ('-', '-'): 0, ('A', '-'): 0, ('-', 'A'): 0, ('T', '-'): 0, 
+                         ('-', 'T'): 0, ('G', '-'): 0, ('-', 'G'): 0, ('C', '-'): 0, 
+                         ('-', 'C'): 0}
     else:
         weight_matrix = get_weight_matrix()
+
 
     sequences, names = read_seqs(args.filename, args.alignment_mode)
     distances, _ = create_distance_matrix(sequences=sequences)
@@ -60,7 +67,7 @@ def main_():
 
     ids = get_ids_from_guide_tree(node.id)
     for id, seq in zip(ids, aligned_sequences):
-        print(f'Sequence name: {id}\t{seq}')
+        print(f'Sequence name: {names[int(id)]}\t{seq}')
 
 
 if __name__ == "__main__":
