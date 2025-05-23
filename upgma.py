@@ -24,9 +24,9 @@ def create_distance_matrix(sequences, match=1, mismatch=1, gap=1, gap_extend=Non
 
     for i, j in combinations(range(n), 2):
         if gap_extend is None:
-            align_seq1, align_seq2, _, score = needleman_wunsch(sequences[i], sequences[j], match, mismatch, gap)
+            align_seq1, align_seq2, _, score = needleman_wunsch(sequences[i][1], sequences[j][1], match, mismatch, gap)
         else:
-            align_seq1, align_seq2, _, score = needleman_wunsch_affine(sequences[i], sequences[j], match, mismatch, gap, gap_extend)
+            align_seq1, align_seq2, _, score = needleman_wunsch_affine(sequences[i][1], sequences[j][1], match, mismatch, gap, gap_extend)
         
         align_seqs[(i, j)] = (align_seq1, align_seq2)
         align_seqs[(j, i)] = (align_seq2, align_seq1)

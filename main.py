@@ -1,12 +1,14 @@
 import time
 import blosum as bl
-from lolviz import *
+
 
 from upgma import (
     create_distance_matrix,
     upgma,
 )
+from parser import parse_args
 from progressive_alignment import progressive_alignment
+from read_file import read_seqs
 
 
 def get_weight_matrix():
@@ -25,15 +27,15 @@ def get_weight_matrix():
     }
 
 
-def main():
+def main_():
+    args = parse_args()
     weight_matrix = get_weight_matrix()
 
-    with open("example.txt", "r") as fp:
-        sequences = [s.strip() for s in fp.readlines()]
+    sequences = read_seqs(args.filename, args.alignment_mode)
 
     distances, _ = create_distance_matrix(sequences=sequences)
 
-    print(distances)
+    #print(distances)
 
     node = upgma(dist_matrix=distances)
 
@@ -45,11 +47,5 @@ def main():
 
     print(*aligned_sequences, sep="\n")
 
-    g = objviz(node)
-    g.view()
-
-    time.sleep(60)
-
-
 if __name__ == "__main__":
-    main()
+    main_()
