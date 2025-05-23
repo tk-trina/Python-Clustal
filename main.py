@@ -42,14 +42,16 @@ def get_ids_from_guide_tree(ids):
 
 def main_():
     args = parse_args()
-    weight_matrix = get_weight_matrix()
+    molecule = args.molecule
+    if molecule == DNA:
+        weight_matrix = None
+    else:
+        weight_matrix = get_weight_matrix()
 
     sequences, names = read_seqs(args.filename, args.alignment_mode)
-
     distances, _ = create_distance_matrix(sequences=sequences)
 
     node = upgma(dist_matrix=distances)
-
     aligned_sequences = progressive_alignment(
         sequences=sequences, 
         guide_tree_root=node,

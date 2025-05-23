@@ -34,13 +34,13 @@ def cluster_alignment(
 
     return Cluster(
         seqs=[
-            "".join([   
+            "".join([
                 seq1[idx] if isinstance(idx, int) else '-'
                 for idx in align1
             ])
             for seq1 in first.seqs
         ] + [
-            "".join([   
+            "".join([
                 seq2[idx] if isinstance(idx, int) else '-'
                 for idx in align2
             ])
@@ -49,18 +49,20 @@ def cluster_alignment(
     )
 
 
+
+
 def progressive_alignment(
-    sequences: list[str],
-    guide_tree_root: UPGMA_Node,
-    weight_matrix: dict,
-    gap_open: float = 1.0,
-    gap_extend: float = 0.5,
+        sequences: list[str],
+        guide_tree_root: UPGMA_Node,
+        weight_matrix=None,
+        gap_open: float = 1.0,
+        gap_extend: float = 0.5,
 ):
     """
     Args:
         sequences (list): list of sequences
         guide_tree_root (UPGMA_Node): root node of the guide tree
-        weight_matrix (dict)
+        weight_matrix (dict): if weight matrix is None, aligns DNA sequences
     Returns:
         aligned sequences (list[str])
     """
@@ -68,7 +70,12 @@ def progressive_alignment(
     def inner(node: UPGMA_Node):
         if not node.children:
             return Cluster(seqs=[sequences[node.id]])
-        
+
+        if weight_matrix is None:
+            return profile_alignment(
+                Cluster1=inner(node=node.children[0]),
+                Cluster2=inner(node=node.children[1]), gap_open=gap_open, gap_extend=gap_extend)
+
         return cluster_alignment(
             first=inner(node=node.children[0]),
             second=inner(node=node.children[1]),
@@ -76,5 +83,5 @@ def progressive_alignment(
             gap_open=gap_open,
             gap_extend=gap_extend,
         )
-    
+
     return inner(node=guide_tree_root).seqs
