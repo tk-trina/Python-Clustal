@@ -22,8 +22,8 @@ def read_seqs(f, alignment_mode):
         seqs = []
         names = []
         for seq in clustal_sequences:
-            name, sequence = seq.id, str(seq.seq)
-            seqs.append((name, sequence))
+            name, sequence = seq.id, str(seq.seq).replace('-','')
+            seqs.append(sequence)
             names.append(name)
         
     return seqs, names
