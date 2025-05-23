@@ -39,8 +39,8 @@ def parse_args() -> Args:
         gap_open=args.gap_open,
         gap_extension=args.gap_extension,
         molecule=args.molecule,
-        match = args.match,
-        mismatch = args.mismatch
+        match=args.match,
+        mismatch=args.mismatch
     )
 
 
