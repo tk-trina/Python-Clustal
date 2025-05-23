@@ -33,14 +33,14 @@ def get_dna_matrix(match, mismatch, gap):
              matrix[(i,j)] = 0
              continue
         elif i == '-' or j == '-':
-            matrix[(i,j)] = gap
-            matrix[(j,i)] = gap
+            matrix[(i,j)] = -gap
+            matrix[(j,i)] = -gap
         elif i == j:
             matrix[(i,j)] = match
             matrix[(j, i)] = match
         else:
-            matrix[(i,j)] = mismatch
-            matrix[(j,i)] = mismatch
+            matrix[(i,j)] = -mismatch
+            matrix[(j,i)] = -mismatch
     return matrix
 
 def get_ids_from_guide_tree(ids):
