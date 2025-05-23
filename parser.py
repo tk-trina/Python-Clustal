@@ -24,8 +24,8 @@ def create_parser():
     parser.add_argument("--gap-extension", type=float, default= 0.5, help="Penalty for gap extension")
     parser.add_argument("-m","--molecule", type=str, choices=('DNA', 'protein'), required=True, 
                         help='Choose the type of sequences: {DNA, protein}')
-    parser.add_argument("--match", type=float,  default = 5,  help="Bonus for match")
-    parser.add_argument("--mismatch", type=float, default= 4, help="Penalty for mismatch")
+    parser.add_argument("--match", type=float,  default = 5,  help="Bonus for match (for DNA alignment)")
+    parser.add_argument("--mismatch", type=float, default= 4, help="Penalty for mismatch (for DNA alignment)")
     return parser
 
 
