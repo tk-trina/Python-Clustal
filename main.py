@@ -1,6 +1,6 @@
 import time
 import blosum as bl
-
+from itertools import product
 
 from upgma import (
     create_distance_matrix,
@@ -26,6 +26,23 @@ def get_weight_matrix():
         ("-", "-"): 0.0,
     }
 
+def get_dna_matrix(match, mismatch, gap):
+    matrix ={}
+    for i, j in product(['A', 'T', 'G', 'C','-'], repeat = 2):
+        if i == '-' and j == '-':
+             matrix[(i,j)] = 0
+             continue
+        elif i == '-' or j == '-':
+            matrix[(i,j)] = gap
+            matrix[(j,i)] = gap
+        elif i == j:
+            matrix[(i,j)] = match
+            matrix[(j, i)] = match
+        else:
+            matrix[(i,j)] = mismatch
+            matrix[(j,i)] = mismatch
+    return matrix
+
 def get_ids_from_guide_tree(ids):
     stack = list(ids)
     res = []
@@ -44,13 +61,7 @@ def main_():
     args = parse_args()
     molecule = args.molecule
     if molecule == 'DNA':
-        weight_matrix = {('A', 'A'): 1, ('A', 'T'): -1, ('A', 'G'): -1, ('A', 'C'): -1, 
-                         ('T', 'A'): -1, ('T', 'T'): 1, ('T', 'G'): -1, ('T', 'C'): -1, 
-                         ('G', 'A'): -1, ('G', 'T'): -1, ('G', 'G'): 1, ('G', 'C'): -1, 
-                         ('C', 'A'): -1, ('C', 'T'): -1, ('C', 'G'): -1, ('C', 'C'): 1, 
-                         ('-', '-'): 0, ('A', '-'): 0, ('-', 'A'): 0, ('T', '-'): 0, 
-                         ('-', 'T'): 0, ('G', '-'): 0, ('-', 'G'): 0, ('C', '-'): 0, 
-                         ('-', 'C'): 0}
+        weight_matrix = get_dna_matrix(args.match, args.mismatch, args.gap_open)
     else:
         weight_matrix = get_weight_matrix()
 
@@ -63,6 +74,8 @@ def main_():
         sequences=sequences, 
         guide_tree_root=node,
         weight_matrix=weight_matrix,
+        gap_open = args.gap_open,
+        gap_extend = args.gap_extension
     )
 
     ids = get_ids_from_guide_tree(node.id)

@@ -10,6 +10,8 @@ class Args(typing.NamedTuple):
     gap_open: float
     gap_extension: float
     molecule: str
+    match: float
+    mismatch: float
 
 
 def create_parser():
@@ -22,6 +24,8 @@ def create_parser():
     parser.add_argument("--gap-extension", type=float, required=True, help="Penalty for gap extension")
     parser.add_argument("-m","--molecule", type=str, choices=('DNA', 'protein'), required=True, 
                         help='Choose the type of sequences: {DNA, protein}')
+    parser.add_argument("--match", type=float,  default = 5,  help="Bonus for match")
+    parser.add_argument("--mismatch", type=float, default=-4, help="Penalty for mismatch")
     return parser
 
 
@@ -34,6 +38,9 @@ def parse_args() -> Args:
         alignment_mode=args.alignment_mode,
         gap_open=args.gap_open,
         gap_extension=args.gap_extension,
-        molecule=args.molecule
+        molecule=args.molecule,
+        match = arg.match,
+        mismatch = arg.mismatch
     )
+
 

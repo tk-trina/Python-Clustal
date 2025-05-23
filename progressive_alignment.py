@@ -53,7 +53,7 @@ def cluster_alignment(
 def progressive_alignment(
         sequences: list[str],
         guide_tree_root: UPGMA_Node,
-        weight_matrix=None,
+        weight_matrix: dict,
         gap_open: float = 1.0,
         gap_extend: float = 0.5,
 ):
