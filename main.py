@@ -26,26 +26,40 @@ def get_weight_matrix():
         ("-", "-"): 0.0,
     }
 
+def get_ids_from_guide_tree(ids):
+    stack = list(ids)
+    res = []
+    while stack:
+        item = stack.pop()
+        if isinstance(item, tuple):
+            stack.extend(item) 
+        elif item=='(' or item==')' or item==',':
+            continue
+        else:
+            res.append(item)
+    return list(reversed(res))
+
 
 def main_():
     args = parse_args()
     weight_matrix = get_weight_matrix()
 
-    sequences = read_seqs(args.filename, args.alignment_mode)
+    sequences, names = read_seqs(args.filename, args.alignment_mode)
 
     distances, _ = create_distance_matrix(sequences=sequences)
-
-    #print(distances)
 
     node = upgma(dist_matrix=distances)
 
     aligned_sequences = progressive_alignment(
-        sequences=sequences,
+        sequences=sequences, 
         guide_tree_root=node,
         weight_matrix=weight_matrix,
     )
 
-    print(*aligned_sequences, sep="\n")
+    ids = get_ids_from_guide_tree(node.id)
+    for id, seq in zip(ids, aligned_sequences):
+        print(f'Sequence name: {id}\t{seq}')
+
 
 if __name__ == "__main__":
     main_()
