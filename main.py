@@ -8,7 +8,7 @@ from upgma import (
 )
 from parser import parse_args
 from progressive_alignment import progressive_alignment
-from read_file import read_seqs
+from read_write_file import read_seqs, fasta_to_clustal
 
 
 def get_weight_matrix():
@@ -79,9 +79,8 @@ def main_():
     )
 
     ids = get_ids_from_guide_tree(node.id)
-    for id, seq in zip(ids, aligned_sequences):
-        print(f'Sequence name: {names[int(id)]}\t{seq}')
 
+    fasta_to_clustal(ids,names,aligned_sequences)
 
 if __name__ == "__main__":
     main_()
