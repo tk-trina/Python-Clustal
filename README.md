@@ -27,6 +27,7 @@ To input file with sequences to align, use -- filename option. This program acce
 
 #### Additional options
 
+```text
   --gap-open GAP_OPEN   
         Penalty for gap opening
 
@@ -40,10 +41,10 @@ To input file with sequences to align, use -- filename option. This program acce
   --mismatch MISMATCH   
         Penalty for mismatch (for DNA alignment)
 
-    -h, --help            
+   -h, --help            
         Show this help message and exit
 
-
+```
 
 
 
