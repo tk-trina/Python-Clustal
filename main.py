@@ -43,7 +43,7 @@ def get_ids_from_guide_tree(ids):
 def main_():
     args = parse_args()
     molecule = args.molecule
-    if molecule == DNA:
+    if molecule == 'DNA':
         weight_matrix = None
     else:
         weight_matrix = get_weight_matrix()
