@@ -93,7 +93,7 @@ def main_():
 
     ids = get_ids_from_guide_tree(node.id)
 
-    fasta_to_clustal(ids, names, aligned_sequences)
+    fasta_to_clustal(ids, names, aligned_sequences, args.output)
 
 if __name__ == "__main__":
     main_()
