@@ -7,12 +7,14 @@ Multiple sequence alignments (MSAs) are essential for figuring out evolutionary 
 The algorithm used in this implementation is based on articles by Desmond G. Higgins and Paul M. Sharp (1988) and Julie D.Thompson, Desmond G.Higgins and Toby J.Gibson (1994). [2, 3]
 
 ### Description
-In this implementation, the clustering method `UPGMA`[4] is used to build the guide tree (dendrogram). This algorithm creates a rooted tree based on a similarity matrix, so that similar sequences are located next to each other in the tree structure. The values in the similarity matrix for each pair of sequences are calculated using the formula `dist = 1 - (score / max(length_seq1, length_seq2))` , in which `score` is the score of the pairwise global alignment of sequences constructed by the Needleman-Wunsch algorithm, `length_seq1, length_seq2` are the lengths of the sequences. The UPGMA algorithm produces an ultrametric tree in which the distances from the root to every branch tip are equal. The multiple alignment is constructed by first aligning the most similar sequence pairs, then iteratively incorporating more distant sequences through profile-profile alignment, and finally merging existing clusters along a guide tree. 
+
+In this implementation, the clustering method `UPGMA`[4] is used to build a guide tree (dendrogram). This algorithm creates a rooted tree based on a similarity (distances) matrix, so that similar sequences are located next to each other in the tree structure. The values in the similarity matrix for each pair of sequences are calculated using the formula `dist = 1 - (score / max(length_seq1, length_seq2))` , in which `score` is the score of the pairwise global alignment of sequences constructed by the Needleman-Wunsch algorithm, `length_seq1, length_seq2` are the lengths of the sequences. The UPGMA algorithm produces an ultrametric tree in which the distances from the root to every branch tip are equal (based on the assumption of equal rates of evolution). The multiple alignment is constructed by aligning the most similar sequence pairs, and then iteratively incorporating more distant sequences through profile-profile alignment, merging existing clusters along a guide tree. 
 
 ### Input options
 
 #### Required options
 
+```text
   -f FILENAME, --filename FILENAME
         Input file with sequences to align
 
@@ -21,9 +23,9 @@ In this implementation, the clustering method `UPGMA`[4] is used to build the gu
 
   -m {DNA,protein}, --molecule {DNA,protein}
         Choose the type of sequences: {DNA, protein}
+```
 
-
-To input file with sequences to align, use -- filename option. This program accepts  a sequence file with un-aligned (FASTA format) or aligned sequences (Clustal format). To select one of the modes, use option -- alignment_mode.  The program constucts alignment for both DNA sequences and protein sequences. To align  the  DNA sequence , use option -- molecule DNA. To align  the protein sequence , use option -- molecule protein.
+To input file with sequences to align, use `--filename` option. This program accepts a sequence file with unaligned (FASTA format) or aligned sequences (Clustal format). To select one of the modes, use option `--alignment_mode`.  The program constucts alignment for both DNA sequences and protein sequences. To align  the  DNA sequence, use option `--molecule DNA`. To align the protein sequences, use option `--molecule protein`.
 
 #### Additional options
 
@@ -45,8 +47,6 @@ To input file with sequences to align, use -- filename option. This program acce
         Show this help message and exit
 
 ```
-
-
 
 
 ### Literature
