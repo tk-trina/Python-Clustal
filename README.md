@@ -25,7 +25,7 @@ In this implementation, the clustering method `UPGMA`[4] is used to build a guid
         Choose the type of sequences: {DNA, protein}
 ```
 
-To input file with sequences to align, use `--filename` option. This program accepts a sequence file with unaligned (FASTA format) or aligned sequences (Clustal format). To select one of the modes, use option `--alignment_mode`.  The program constucts alignment for both DNA sequences and protein sequences. To align  the  DNA sequence, use option `--molecule DNA`. To align the protein sequences, use option `--molecule protein`.
+To input file with sequences to align, use `--filename` option. This program accepts a sequence file with unaligned (FASTA format) or aligned sequences (Clustal format). To select one of the modes, use option `--alignment_mode`.  The program constucts alignment for both DNA sequences and protein sequences. To align  the  DNA sequences, use option `--molecule DNA`. To align the protein sequences, use option `--molecule protein`. 
 
 #### Additional options
 
@@ -44,9 +44,11 @@ To input file with sequences to align, use `--filename` option. This program acc
         Penalty for mismatch (for DNA alignment)
 
    -h, --help            
-        Show this help message and exit
+        Show help message and exit
 
 ```
+To specify penalties for gap opening  and for gap extension, enter positive numbers in float format after the arguments `--gap-open` (by default `1`) and `--gap-extension` (by default`0.5`), respectively.  In DNA alignment enter positive numbers in float format after the argument `--match` to specify a bonus for match (by default `5`) and option `--mismatch ` to specify a penalty for mismatch (by default `4`).
+Use option `--help`  to to get information about the arguments.
 
 
 ### Literature
