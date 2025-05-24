@@ -27,7 +27,7 @@ def create_parser():
                         help='Choose the type of sequences: {DNA, protein}')
     parser.add_argument("--match", type=float,  default=5,  help="Bonus for match (for DNA alignment)")
     parser.add_argument("--mismatch", type=float, default=4, help="Penalty for mismatch (for DNA alignment)")
-    parser.add_argument("-o", "--output", type=str, default=None)
+    parser.add_argument("-o", "--output", type=str, default=None, help="File for writing the output" )
     return parser
 
 
