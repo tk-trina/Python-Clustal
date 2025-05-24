@@ -60,7 +60,7 @@ def fasta_to_clustal(ids, names, sequences, output, line_length=60):
             print(f"{' '.ljust(len(max_name) + 5)}{''.join(consensus[i:block_end])}\n")
     else:
         with open(output, "w", encoding="utf-8") as f:
-            f.write("CLUSTAL multiple sequence alignment\n")
+            f.write("CLUSTAL multiple sequence alignment\n\n\n")
             for id, seq in zip(ids, sequences):
                 f.write(f"{names[int(id)].ljust(len(max_name) + 5)}{seq}\n")
             f.write(f"{' '.ljust(len(max_name) + 5)}{''.join(consensus)}")
