@@ -48,7 +48,7 @@ To input file with sequences to align, use `--filename` option. This program acc
 
 ```
 To specify penalties for gap opening  and for gap extension, enter positive numbers in float format after the arguments `--gap-open` (by default `1`) and `--gap-extension` (by default`0.5`), respectively.  In DNA alignment enter positive numbers in float format after the argument `--match` to specify a bonus for match (by default `5`) and option `--mismatch ` to specify a penalty for mismatch (by default `4`).
-Use option `--help`  to to get information about the arguments.
+Use option `--help` to to get information about the arguments.
 
 
 ### Literature
