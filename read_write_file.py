@@ -29,6 +29,7 @@ def read_seqs(f, alignment_mode):
         
     return seqs, names
 
+
 def fasta_to_clustal(ids, names, sequences, output, line_length=60):
     '''
     ids (list): list of ids derived from the guide tree
@@ -39,7 +40,6 @@ def fasta_to_clustal(ids, names, sequences, output, line_length=60):
     Prints in stdout the alignment in clustal format 
     '''
 
-    
     consensus = []
     for col in zip(*sequences):
         char = {c for c in col}
