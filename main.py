@@ -46,16 +46,19 @@ def get_dna_matrix(match, mismatch, gap):
 
 def get_ids_from_guide_tree(ids):
     stack = list(ids)
-    res = []
-    while stack:
-        item = stack.pop()
-        if isinstance(item, tuple):
-            stack.extend(item) 
-        elif item=='(' or item==')' or item==',':
-            continue
+    current_number = []
+    res=[]
+    for item in stack:
+        if item.isdigit():
+            current_number.append(item)
         else:
-            res.append(item)
-    return list(reversed(res))
+            if current_number:
+                res.append(''.join(current_number))
+                current_number = []
+    
+    if current_number:
+        res.append(''.join(current_number))
+    return res
 
 
 def main_():
