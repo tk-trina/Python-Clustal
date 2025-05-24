@@ -1,9 +1,5 @@
 
-from Bio import SeqIO, AlignIO
-from Bio.Align import MultipleSeqAlignment
-from Bio.SeqRecord import SeqRecord
-from Bio.Seq import Seq
-from io import StringIO
+from Bio import SeqIO
 
 def read_seqs(f, alignment_mode):
     '''
@@ -33,8 +29,7 @@ def read_seqs(f, alignment_mode):
         
     return seqs, names
 
-
-def fasta_to_clustal(ids, names, sequences):
+def fasta_to_clustal(ids, names, sequences, line_length=60):
     '''
     ids (list): list of ids derived from the guide tree
     names (list): names of sequences from the original file
@@ -42,11 +37,22 @@ def fasta_to_clustal(ids, names, sequences):
 
     Prints in stdout the alignment in clustal format 
     '''
-    records = [SeqRecord(Seq(s), id=names[int(i)], description="") 
-            for i, s in zip(ids, sequences)]
-    alignment = MultipleSeqAlignment(records)
-    output=StringIO()
-    AlignIO.write(alignment, output, "clustal")
-    clustal_str = output.getvalue()
-    clustal_str = clustal_str[:7] + clustal_str[16:]
-    print(clustal_str)
+    
+    print("CLUSTAL multiple sequence alignment\n")
+    
+    consensus = []
+    for col in zip(*sequences):
+        char = {c for c in col}
+        if len(char) == 1:
+            consensus.append('*')
+        else:
+            consensus.append(' ')
+    
+    max_name = max(names, key=lambda x: len(x))
+    for i in range(0, len(sequences[0]), line_length):
+        block_end = min(i+line_length, len(sequences[0]))
+        
+        for id, seq in zip(ids, sequences):
+            print(f"{names[int(id)].ljust(len(max_name) + 5)}{seq[i:block_end]}")
+        
+        print(f"{' '.ljust(len(max_name) + 5)}{''.join(consensus[i:block_end])}\n")
