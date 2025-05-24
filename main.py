@@ -1,4 +1,4 @@
-import time
+
 import blosum as bl
 from itertools import product
 
@@ -43,6 +43,7 @@ def get_dna_matrix(match, mismatch, gap):
             matrix[(j,i)] = -mismatch
     return matrix
 
+
 def get_ids_from_guide_tree(ids):
     stack = list(ids)
     res = []
@@ -69,18 +70,30 @@ def main_():
     sequences, names = read_seqs(args.filename, args.alignment_mode)
     distances, _ = create_distance_matrix(sequences=sequences)
 
+    print('Building the tree...\n')
+
     node = upgma(dist_matrix=distances)
-    aligned_sequences = progressive_alignment(
-        sequences=sequences, 
-        guide_tree_root=node,
-        weight_matrix=weight_matrix,
-        gap_open = args.gap_open,
-        gap_extend = args.gap_extension
-    )
+    
+    print('Aligning...\n')
+
+    try:
+        aligned_sequences = progressive_alignment(
+            sequences=sequences, 
+            guide_tree_root=node,
+            weight_matrix=weight_matrix,
+            gap_open = args.gap_open,
+            gap_extend = args.gap_extension
+        )
+    except:
+        molecules = ['DNA', 'protein']
+        molecules.remove(molecule)
+        raise KeyError(f'Wrong sequence type, try changing it to {molecules[0]}')
+    
+    print('The alignment is completed.\n\nPreparing the output...\n')
 
     ids = get_ids_from_guide_tree(node.id)
 
-    fasta_to_clustal(ids,names,aligned_sequences)
+    fasta_to_clustal(ids, names, aligned_sequences)
 
 if __name__ == "__main__":
     main_()
